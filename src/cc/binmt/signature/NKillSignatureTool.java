@@ -177,15 +177,21 @@ public class NKillSignatureTool {
                     if (idIndex == -1)
                         throw new IOException("idIndex == -1");
 
+                    boolean isMax = true;
                     for (int i = 0; i < size; ++i) {
                         int id = parser.getAttributeNameResource(i);
                         if (id > 0x01010003) {
+                            isMax = false;
                             if (i != 0) {
                                 System.arraycopy(newData, off + 20, newData, off, 20 * i);
                                 off += 20 * i;
                             }
                             break;
                         }
+                    }
+                    if (isMax) {
+                        System.arraycopy(newData, off + 20, newData, off, 20 * size);
+                        off += 20 * size;
                     }
 
                     writeInt(newData, off, axml.mTableStrings.find("http://schemas.android.com/apk/res/android"));
