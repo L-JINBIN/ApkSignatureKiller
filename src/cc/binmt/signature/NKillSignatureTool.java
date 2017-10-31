@@ -228,8 +228,7 @@ public class NKillSignatureTool {
             ZipEntry ze = entries.nextElement();
             String name = ze.getName().toUpperCase();
             if (!ze.isDirectory() && name.startsWith("META-INF/") && name.endsWith(".RSA")) {
-                InputStream is = new ByteArrayInputStream(StreamUtil.readBytes(zipFile.getInputStream(ze)));
-                PKCS7 pkcs7 = new PKCS7(is);
+                PKCS7 pkcs7 = new PKCS7(StreamUtil.readBytes(zipFile.getInputStream(ze)));
                 Certificate[] certs = pkcs7.getCertificates();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 DataOutputStream dos = new DataOutputStream(baos);
