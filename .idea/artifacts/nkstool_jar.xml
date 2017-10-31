@@ -5,6 +5,7 @@
       <element id="module-output" name="nkstool" />
       <element id="extracted-dir" path="$PROJECT_DIR$/libs/antlr-runtime-3.5.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/libs/support-annotations-25.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/guava-18.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
