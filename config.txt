@@ -1,0 +1,15 @@
+# 获取签名信息
+apk.signed=src.apk
+
+# 要处理的APK
+apk.src=src.apk
+
+# 写出的APK名
+apk.out=out.apk
+
+# 签名配置
+sign.enable=true
+sign.file=test.keystore
+sign.password=123456
+sign.alias=user
+sign.aliasPassword=654321

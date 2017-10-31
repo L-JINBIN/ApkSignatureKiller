@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="nkstool:jar">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="nkstool.jar">
+      <element id="module-output" name="nkstool" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/antlr-runtime-3.5.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/support-annotations-25.3.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
