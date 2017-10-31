@@ -19,5 +19,17 @@
 使用方法
 -------
 
-1. 修改 config.txt 中的配置信息。
-2. 打开终端，cd到项目根目录，输入 java -jar nkstool.jar 并回车。
+1. 使用本工具需要先安装 Java 环境，nkstool.jar 是已编译好的文件。
+2. 按需修改 config.txt 中的配置信息，把相应apk放到项目根目录。
+3. 运行，三种方式
+    - 用 IDEA 打开项目并运行源码。
+    - Windows 系统可以直接打开 run.bat 执行。
+    - Linux 或 MacOS 系统中，打开终端，cd到项目根目录，输入 java -jar nkstool.jar 并回车。
+4. 测试输出的 apk 文件
+
+其它
+----
+
+如果不需要源码，可以只保留nkstool.jar、config.txt、run.bat等文件。
+
+本工具只对那些仅通过 PackageManager.getPackageInfo().signature 来校验签名的应用有效。
