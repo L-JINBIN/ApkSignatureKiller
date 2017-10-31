@@ -17,8 +17,10 @@ import org.jf.dexlib2.writer.builder.DexBuilder;
 import org.jf.dexlib2.writer.io.MemoryDataStore;
 import org.jf.smali.Smali;
 import org.jf.smali.SmaliOptions;
+import sun.security.pkcs.PKCS7;
 
 import java.io.*;
+import java.security.cert.Certificate;
 import java.util.*;
 
 public class NKillSignatureTool {
@@ -47,7 +49,7 @@ public class NKillSignatureTool {
         String signAliasPassword = properties.getProperty("sign.aliasPassword");
 
         System.out.println("正在读取签名：" + signApk.getPath());
-        signatures = ApkSign.getApkSignData(signApk);
+        signatures = getApkSignatureData(signApk);
         byte[] manifestData;
         byte[] dexData;
 
@@ -217,6 +219,31 @@ public class NKillSignatureTool {
     private static int readInt(byte[] data, int off) {
         return data[off + 3] << 24 | (data[off + 2] & 0xFF) << 16 | (data[off + 1] & 0xFF) << 8
                 | data[off] & 0xFF;
+    }
+
+    private static byte[] getApkSignatureData(File apkFile) throws Exception {
+        ZipFile zipFile = new ZipFile(apkFile);
+        Enumeration<ZipEntry> entries = zipFile.getEntries();
+        while (entries.hasMoreElements()) {
+            ZipEntry ze = entries.nextElement();
+            String name = ze.getName().toUpperCase();
+            if (!ze.isDirectory() && name.startsWith("META-INF/") && name.endsWith(".RSA")) {
+                InputStream is = new ByteArrayInputStream(StreamUtil.readBytes(zipFile.getInputStream(ze)));
+                PKCS7 pkcs7 = new PKCS7(is);
+                Certificate[] certs = pkcs7.getCertificates();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                DataOutputStream dos = new DataOutputStream(baos);
+                dos.write(certs.length);
+                for (int i = 0; i < certs.length; i++) {
+                    byte[] data = certs[i].getEncoded();
+                    System.out.printf("  --SignatureHash[%d]: %08x\n", i, Arrays.hashCode(data));
+                    dos.writeInt(data.length);
+                    dos.write(data);
+                }
+                return baos.toByteArray();
+            }
+        }
+        throw new Exception("META-INF/XXX.RSA file not found.");
     }
 
 }
