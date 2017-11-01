@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.util.Base64;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -47,7 +49,8 @@ public class PmsHookApplication extends Application implements InvocationHandler
 
     private void hook(Context context) {
         try {
-            DataInputStream is = new DataInputStream(PmsHookApplication.class.getResourceAsStream("/assets/hook/signatures.dat"));
+            String data = "### Signatures Data ###";
+            DataInputStream is = new DataInputStream(new ByteArrayInputStream(Base64.decode(data, Base64.DEFAULT)));
             byte[][] sign = new byte[is.read() & 0xFF][];
             for (int i = 0; i < sign.length; i++) {
                 sign[i] = new byte[is.readInt()];
