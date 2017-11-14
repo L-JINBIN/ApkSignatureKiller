@@ -32,4 +32,4 @@
 
 如果不需要源码，可以只保留nkstool.jar、config.txt、run.bat等文件。
 
-本工具只对那些仅通过 PackageManager.getPackageInfo().signature 来校验签名的应用有效。
+本工具只对那些仅通过 PackageManager.getPackageInfo().signatures 来校验签名的应用有效。
