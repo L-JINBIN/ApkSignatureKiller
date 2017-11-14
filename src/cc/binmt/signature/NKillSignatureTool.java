@@ -233,7 +233,7 @@ public class NKillSignatureTool {
         while (entries.hasMoreElements()) {
             ZipEntry ze = entries.nextElement();
             String name = ze.getName().toUpperCase();
-            if (name.startsWith("META-INF/") && name.endsWith(".RSA")) {
+            if (name.startsWith("META-INF/") && (name.endsWith(".RSA") || name.endsWith(".DSA"))) {
                 PKCS7 pkcs7 = new PKCS7(StreamUtil.readBytes(zipFile.getInputStream(ze)));
                 Certificate[] certs = pkcs7.getCertificates();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -248,7 +248,7 @@ public class NKillSignatureTool {
                 return baos.toByteArray();
             }
         }
-        throw new Exception("META-INF/XXX.RSA file not found.");
+        throw new Exception("META-INF/XXX.RSA (DSA) file not found.");
     }
 
 }
